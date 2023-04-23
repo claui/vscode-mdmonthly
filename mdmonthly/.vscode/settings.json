@@ -26,26 +26,15 @@
   "eslint.nodePath": ".yarn/sdks",
   "files.exclude": {
     "**/.git": true,
-    "**/mdmonthly/lib": true
+    "**/lib": true
   },
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "*.tmLanguage.json"
-      ],
-      "url": "https://raw.githubusercontent.com/Septh/tmlanguage/master/tmlanguage.json"
-    }
-  ],
   "markdownlint.config": {
     "MD033": false
   },
   "search.exclude": {
-    "/extension/build": true,
-    "/extension/dist": true,
-    "/extension/work": true,
-    "/mdmonthly/build": true,
-    "/mdmonthly/dist": true,
-    "/mdmonthly/types": true,
+    "/build": true,
+    "/dist": true,
+    "/types": true,
     "**/.yarn": true,
     "**/.pnp.*": true
   },

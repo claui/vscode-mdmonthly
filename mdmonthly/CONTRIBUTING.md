@@ -1,22 +1,9 @@
-# vscode-mdmonthly
-
-This is the source code repository for the `mdmonthly`
-VS Code extension.
-
-This document is for **contributors,** not for users of this
-extension.  
-For **user documentation,** see: [extension/README.md](./extension/README.md)  
-For **license information,** see the bottom of this document.
-
-## About the extension
-
-For a list of features and details, see the user documentation:
-[extension/README.md](./extension/README.md)
+# md-monthly
 
 ## Requirements for contributing
 
-Working on this VS Code extension requires the following programs to
-be installed on your system:
+Working on this TypeScript package requires the following programs
+to be installed on your system:
 
 - `yarn` (required)
 - `nvm` (recommended)
@@ -32,99 +19,13 @@ To install dependencies, run: `yarn install`
 
 If that fails, consult the _Maintenance_ section.
 
-## Building the extension
+## Building the package
 
-To build the extension, run: `yarn package`
+To build the package, run: `yarn compile`
 
-Unlike `vsce package`, running `yarn package` will work around issue
-[microsoft/vscode-vsce#517](https://github.com/microsoft/vscode-vsce/issues/517).
-Use `yarn package` as long as the issue is unresolved.
+## Running unit tests
 
-## Publishing the extension
-
-Publishing the extension has several steps:
-
-1. Merge the contributions.
-2. Choose a target version number.
-3. Publish to the Marketplace. (This modifies `extension/package.json`.)
-4. Publish to the Open VSX Registry.
-5. Create a Git commit, Git tag, GitHub prerelease and GitHub PR.
-
-### Merging the contributions
-
-Make sure that all the contributions you’re going to have in the
-release have been merged to the `main` branch.
-
-### Choosing a target version number
-
-With all contributions merged into `main`, choose a target version
-number.  
-[The VS Code folks recommend](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions)
-the following numbering scheme:
-
-- `major.ODD_NUMBER.patch` (e.g. 1.1.0) for **pre-release** versions; and
-- `major.EVEN_NUMBER.patch` (e.g. 1.2.0) for **release** versions.
-
-### Publishing to the Marketplace
-
-After deciding on a target version, run:
-
-- `git checkout main`
-- `yarn login`
-- `yarn publish-vsce [--pre-release] [version]`
-
-The `yarn publish-vsce` command first updates the version number in
-[extension/package.json](./extension/package.json) to the given
-version. Then it packages and publishes the extension to the VS Code
-Extension Marketplace.
-
-### Publishing to the Open VSX Registry
-
-Follow these steps to publish the extension to the Open VSX Registry:
-
-1. Set the `OVSX_PAT` environment variable to your personal access
-   token.
-
-   For example, if you’re on Bash and you have your token in
-   1Password, you could run the following command line:
-
-   ```bash
-   read -r OVSX_PAT < <(
-     op item get 'Open VSX Registry' --fields password
-   ) && export OVSX_PAT
-   ```
-
-2. Make sure you have published the extension to the VS Code
-   Extension Marketplace. This ensures that the version number has
-   been updated and that a `.vsix` file has been generated.
-
-3. Run the `yarn ovsx publish` command with the correct
-   `extension/[…].vsix` file as the sole argument. Example in Bash:
-
-   ```bash
-   yarn ovsx publish "extension/mdmonthly-$(jq -r .version extension/package.json).vsix"
-   ```
-
-### Committing, tagging and creating a GitHub prerelease and PR
-
-With the extension now published on the Marketplace, commit the
-change, create a tag, push, cut a GitHub (pre-)release, and create a
-pull request against `main`:
-
-```
-(
-  set -eux
-  git checkout -b publish
-  tag="$(jq -r '"v" + .version' extension/package.json)"
-  echo "New tag: ${tag}"
-  git add -u
-  git commit --edit -m "Release ${tag}"
-  git tag "${tag}"
-  git push --tags
-  gh release create --generate-notes --prerelease "${tag}"
-  gh pr create --fill --web
-)
-```
+To execute the unit tests, run: `yarn test`
 
 ## Maintenance
 
@@ -167,9 +68,6 @@ dependencies. That includes the `@types`, `@typescript-eslint`, and
 `@yarnpkg` scopes but excludes Yarn itself (see the
 `yarn upgrade-yarn-itself` section).
 
-Also excluded is the `@types/vscode` package. For details, see
-section _Upgrading the VS Code API_.
-
 ### yarn upgrade-yarn-itself
 
 To upgrade Yarn PnP to the latest available version, run the
@@ -183,29 +81,6 @@ well with Yarn PnP in scripts.
 
 To also upgrade Yarn itself, run `yarn upgrade-all`.
 
-### Upgrading the VS Code API version
-
-Upgrading the version of the `@types/vscode` package should always
-be a manual step and a conscious decision. It effectively bumps the
-minimum supported VS Code version that this extension supports.
-
-To bump the minimum supported VS Code version, follow these steps:
-
-1. In `package.json`, manually update the minimum version to a new
-   version tuple (e.g. `=1.99`).  
-   Make sure to preserve the `=` prefix as you change the value.
-
-2. In `package.json`, modify the `upgrade-package` script to update
-   the same tuple (e.g `@types/vscode@=1.99`).  
-   Preserve the `@types/vscode@=` prefix as you change the value.
-
-3. In `extension/package.json` under the `engines` section, manually
-   update the value of the `vscode` property to the chosen version.
-   Since `vsce` expects a triple for that property, append a `.0`.  
-   Preserve the `^` prefix as you change the value.
-
-4. Run `yarn clean-install`.
-
 ## Patching dependencies
 
 Sometimes you may want to tweak a dependency. This section explains how to do that using `yarn patch`.
@@ -213,18 +88,6 @@ Sometimes you may want to tweak a dependency. This section explains how to do th
 ### Start editing
 
 To start editing a dependency, run `yarn patch <dependency>`.
-
-For example, to start editing the `vsce` executable, run:
-
-```shell
-yarn patch @vscode/vsce@npm:2.19.0
-```
-
-Since this project is already patching this dependency, you may want to apply the existing patch to the temporary working directory:
-
-```shell
-patch < path/to/this/project/.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch
-```
 
 ### Finish editing
 
@@ -243,23 +106,23 @@ Note: `yarn repatch` is a custom script. It serves to work around two issues in 
 - It may also use an incorrect key in the resolution entry it writes to `package.json`.  
   The key should match the dependency’s semver expression, not the resolved version.
   Using the latter as a key causes the resolution to never apply.  
-  Example for a correct key: `"@vscode/vsce@^2.19.0"`
+  Example for a correct key: `"@scope/pkgname@^0.1.2"`
 
 ## Handling vulnerable dependencies
 
 ### The thing about vulnerabilities in transitive dependencies
 
 People sometimes discover vulnerabilities in packages on which
-vscode-mdmonthly depends.
+md-monthly depends.
 
 If that happens and a patch comes out, I need to upgrade the
 affected package to a newer version, which includes the patch.
 
 But a vulnerability might also affect a package on which
-vscode-mdmonthly depends only indirectly, e.g. through a
+md-monthly depends only indirectly, e.g. through a
 transitive requirement. A patch may exist for such a package, but
 somewhere in the chain of dependencies (from the vulnerable package
-all the way down to vscode-mdmonthly), the patch may be
+all the way down to md-monthly), the patch may be
 outside the specified semver range so I **can’t upgrade** the
 package via the usual `yarn up` or `yarn up -R` command.
 
@@ -302,15 +165,6 @@ yarn set resolution --save …………@npm:………… …………
 that depends on ………… v………… or higher.)
 -->
 
-## See also
-
-- [TextMate language grammars](https://macromates.com/manual/en/language_grammars)
-- Default themes
-  [dark_vs](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_vs.json)
-  and
-  [dark_plus](https://github.com/microsoft/vscode/blob/main/extensions/theme-defaults/themes/dark_plus.json)
-  as references on how VS Code renders grammar scopes.
-
 ## License
 
 This source code repository contains code and assets sourced from
@@ -325,8 +179,6 @@ source code repository:
 | `.` | This directory | Apache-2.0 | [License](./LICENSE)<br>with License header below |
 | `./.yarn/releases` | The `yarn` package manager | BSD-2-Clause | [License](./.yarn/releases/LICENSE) |
 | `./.yarn/sdks` | SDK files for `yarn` | BSD-2-Clause | [License](./.yarn/sdks/LICENSE) |
-| `./extension` | Front-end source code for this VS Code extension | Apache-2.0 | [License](./extension/LICENSE.txt)<br>with [License header](./extension/README.md#license) |
-| `./mdmonthly` | Source code for the back-end module | Apache-2.0 | [License](./mdmonthly/LICENSE.txt)<br>with [License header](./mdmonthly/README.md#license) |
 
 In each of the directories the table mentions, you will find one
 license file, named `LICENSE` or `LICENSE.txt`.  

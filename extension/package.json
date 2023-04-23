@@ -17,6 +17,10 @@
       {
         "command": "mdmonthly.action.showLog",
         "title": "Markdown Monthly: Show extension log"
+      },
+      {
+        "command": "mdmonthly.action.openJournalEntry",
+        "title": "Markdown Monthly: Open journal entry"
       }
     ],
     "configuration": {
