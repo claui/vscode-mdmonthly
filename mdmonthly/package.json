@@ -9,6 +9,16 @@
   ],
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
+  "comments": {
+    "dependencies": {
+      "@js-temporal/polyfill": "Remove this dependency once all supported Node.js versions have adopted TC39",
+      "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM"
+    },
+    "devDependencies": {
+      "@types/node": "Keep the upper bound in sync with the lower bound specified in `engines`",
+      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release appears"
+    }
+  },
   "dependencies": {
     "@js-temporal/polyfill": "^0.4.3",
     "env-paths": "<=2.x"
