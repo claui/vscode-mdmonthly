@@ -32,7 +32,6 @@
     "MD033": false
   },
   "search.exclude": {
-    "/build": true,
     "/dist": true,
     "/types": true,
     "**/.yarn": true,
