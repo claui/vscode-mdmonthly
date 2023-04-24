@@ -2401,17 +2401,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"env-paths@npm:^2.2.0":
+"env-paths@npm:<=2.x, env-paths@npm:^2.2.0":
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
   checksum: 65b5df55a8bab92229ab2b40dad3b387fad24613263d103a97f91c9fe43ceb21965cd3392b1ccb5d77088021e525c4e0481adb309625d0cb94ade1d1fb8dc17e
-  languageName: node
-  linkType: hard
-
-"env-paths@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "env-paths@npm:3.0.0"
-  checksum: b2b0a0d0d9931a13d279c22ed94d78648a1cc5f408f05d47ff3e0c1616f0aa0c38fb33deec5e5be50497225d500607d57f9c8652c4d39c2f2b7608cd45768128
   languageName: node
   linkType: hard
 
@@ -4126,7 +4119,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.59.0
     "@yarnpkg/sdks": <=2.x || ^3.0.0
     del-cli: ^5.0.0
-    env-paths: ^3.0.0
+    env-paths: <=2.x
     eslint: ^8.39.0
     eslint-plugin-jest: ^27.2.1
     jest: ^29.5.0
