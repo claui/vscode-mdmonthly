@@ -1,1 +1,1 @@
-export * from "./journal";
+export * from "./journal.js";
