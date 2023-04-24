@@ -6,14 +6,14 @@
     "esModuleInterop": true,
     "inlineSources": true,
     "inlineSourceMap": true,
-    "module": "Node16",
-    "moduleResolution": "node16",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "lib",
     "resolveJsonModule": true,
     "skipLibCheck": false,
     "strictNullChecks": true,
-    "target": "ES2022"
+    "target": "ES6"
   },
   "include": [
     "src"
