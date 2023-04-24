@@ -11,7 +11,8 @@
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
   "dependencies": {
-    "@js-temporal/polyfill": "^0.4.3"
+    "@js-temporal/polyfill": "^0.4.3",
+    "env-paths": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
