@@ -5,7 +5,7 @@ import tmp from "tmp";
 
 tmp.setGracefulCleanup();
 
-import { createOrFindJournalEntry, JournalResult } from "../src/index";
+import { createOrFindJournalEntry, JournalResult } from "mdmonthly";
 
 function createTempDir(): string {
   return tmp
