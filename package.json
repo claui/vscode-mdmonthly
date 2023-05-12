@@ -10,15 +10,15 @@
   "devDependencies": {
     "@types/node": "<=16.x",
     "@types/vscode": "=1.76",
-    "@typescript-eslint/eslint-plugin": "^5.59.0",
-    "@typescript-eslint/parser": "^5.59.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
     "@vscode/vsce": "^2.19.0",
     "@yarnpkg/sdks": "<=2.x || ^3.0.0",
     "del-cli": "^5.0.0",
     "esbuild": "^0.17.18",
-    "eslint": "^8.39.0",
-    "ovsx": "^0.8.0",
-    "semver": "^7.5.0",
+    "eslint": "^8.40.0",
+    "ovsx": "^0.8.1",
+    "semver": "^7.5.1",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
@@ -43,7 +43,7 @@
   "resolutions": {
     "@vscode/vsce@^2.19.0": "patch:@vscode/vsce@npm:2.19.0#./.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch"
   },
-  "packageManager": "yarn@3.5.0",
+  "packageManager": "yarn@3.5.1",
   "workspaces": [
     "mdmonthly"
   ]
