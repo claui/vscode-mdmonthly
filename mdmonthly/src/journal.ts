@@ -1,8 +1,10 @@
-import fs from "fs";
-import path from "path";
+import _fs from "fs";
+import _path from "path";
 
-import { Temporal } from "@js-temporal/polyfill";
 import envPaths from "env-paths";
+import { Temporal } from "@js-temporal/polyfill";
+
+import { Fs, Path } from "./fs-deps";
 
 const { PlainDate } = Temporal;
 
@@ -15,7 +17,10 @@ export type JournalResult = {
   character: number;
 };
 
-function readLines(year: string, month: string, yearDirectory: string) {
+function readLines(
+  year: string, month: string, yearDirectory: string,
+  fs: Fs = _fs, path: Path = _path,
+) {
   const markdownFileName = `${year}-${month}.md`;
   const markdownFilePath: string = path.join(yearDirectory, markdownFileName);
 
@@ -29,8 +34,8 @@ function readLines(year: string, month: string, yearDirectory: string) {
 }
 
 export function createOrFindJournalEntry(
-  isoDate: string,
-  projectRoot?: string,
+  isoDate: string, projectRoot?: string,
+  fs: Fs = _fs, path: Path = _path,
 ): JournalResult {
   const paths = envPaths(BASE_NAME, { suffix: "" });
 
