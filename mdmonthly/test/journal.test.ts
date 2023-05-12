@@ -3,13 +3,11 @@ import path from "path";
 
 import tmp from "tmp";
 
-tmp.setGracefulCleanup();
-
 import { createOrFindJournalEntry, JournalResult } from "mdmonthly";
 
 function createTempDir(): string {
   return tmp
-    .dirSync({ template: "journal-test-XXXXXX", unsafeCleanup: true })
+    .dirSync({ template: "journal-test-XXXXXX" })
     .name;
 }
 
@@ -18,7 +16,7 @@ function deleteTempDir(tempDir: string): void {
 }
 
 describe("createOrFindJournalEntry", () => {
-  describe("if neither directory or Markdown file are existing", () => {
+  describe("if no directory exists", () => {
     let tempDir: string;
     let result: JournalResult;
 
@@ -26,6 +24,12 @@ describe("createOrFindJournalEntry", () => {
       tempDir = createTempDir();
       const isoDate = "2023-04-01";
       result = createOrFindJournalEntry(isoDate, tempDir);
+    });
+
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
     });
 
     it("creates a subdirectory", () => {
@@ -66,6 +70,12 @@ describe("createOrFindJournalEntry", () => {
       result = createOrFindJournalEntry(isoDate2, tempDir);
     });
 
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
+    });
+
     it("prepares a L2 header snippet for the day", () => {
       expect(result.headerSnippet).toBe("## 2023-04-02\n\n");
     });
@@ -88,6 +98,12 @@ describe("createOrFindJournalEntry", () => {
       fs.appendFileSync(original.markdownFilePath,
         original.headerSnippet, { encoding: "utf8" });
       result = createOrFindJournalEntry(isoDate2, tempDir);
+    });
+
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
     });
 
     it("prepares a L2 header snippet for the day", () => {

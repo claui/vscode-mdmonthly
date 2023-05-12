@@ -12,7 +12,7 @@
   "comments": {
     "dependencies": {
       "@js-temporal/polyfill": "Remove this dependency once all supported Node.js versions have adopted TC39",
-      "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM"
+      "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM; see also: https://jestjs.io/docs/ecmascript-modules"
     },
     "devDependencies": {
       "@types/node": "Keep the upper bound in sync with the lower bound specified in `engines`",
