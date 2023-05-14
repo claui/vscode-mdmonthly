@@ -12,7 +12,7 @@ function createTempDir(): string {
 }
 
 function deleteTempDir(tempDir: string): void {
-  fs.rmdirSync(tempDir, { recursive: true });
+  fs.rmSync(tempDir, { recursive: true });
 }
 
 describe("createOrFindJournalEntry", () => {
