@@ -1,10 +1,10 @@
 import _fs from "fs";
-import _path from "path";
+import path from "path";
 
 import envPaths from "env-paths";
 import { Temporal } from "@js-temporal/polyfill";
 
-import { Fs, Path } from "./fs-deps";
+import { Fs } from "./fs-deps";
 
 const { PlainDate } = Temporal;
 
