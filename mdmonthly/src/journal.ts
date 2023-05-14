@@ -1,14 +1,12 @@
 import _fs from "fs";
 import path from "path";
 
-import envPaths from "env-paths";
 import { Temporal } from "@js-temporal/polyfill";
 
 import { Fs } from "./fs-deps";
+import { Paths } from "./paths-deps";
 
 const { PlainDate } = Temporal;
-
-const BASE_NAME = "mdmonthly";
 
 export type JournalResult = {
   markdownFilePath: string;
@@ -19,7 +17,7 @@ export type JournalResult = {
 
 function readLines(
   year: string, month: string, yearDirectory: string,
-  fs: Fs = _fs, path: Path = _path,
+  { fs = _fs }: { fs ?: Fs } = {},
 ) {
   const markdownFileName = `${year}-${month}.md`;
   const markdownFilePath: string = path.join(yearDirectory, markdownFileName);
@@ -34,17 +32,19 @@ function readLines(
 }
 
 export function createOrFindJournalEntry(
-  isoDate: string, projectRoot?: string,
-  fs: Fs = _fs, path: Path = _path,
+  isoDate: string,
+  {
+    projectRoot = void 0,
+    fs = _fs,
+    paths = Paths,
+  }: { projectRoot?: string, fs?: Fs, paths?: typeof Paths } = {},
 ): JournalResult {
-  const paths = envPaths(BASE_NAME, { suffix: "" });
-
   const date: Temporal.PlainDate = PlainDate.from(isoDate);
   const year: string = date.year.toString();
   const month: string = date.month.toString().padStart(2, "0");
   const day: string = date.day.toString().padStart(2, "0");
 
-  const yearDirectory: string = path.join(projectRoot ?? paths.data, year);
+  const yearDirectory: string = path.join(projectRoot ?? paths.dataPath, year);
   if (!fs.existsSync(yearDirectory)) {
     fs.mkdirSync(yearDirectory, { recursive: true });
   }

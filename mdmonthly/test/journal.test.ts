@@ -4,6 +4,7 @@ import path from "path";
 import tmp from "tmp";
 
 import { createOrFindJournalEntry, JournalResult } from "mdmonthly";
+import { Paths as _Paths } from "../src/paths-deps";
 
 function createTempDir(): string {
   return tmp
@@ -23,7 +24,7 @@ describe("createOrFindJournalEntry", () => {
     beforeAll(() => {
       tempDir = createTempDir();
       const isoDate = "2023-04-01";
-      result = createOrFindJournalEntry(isoDate, tempDir);
+      result = createOrFindJournalEntry(isoDate, { projectRoot: tempDir });
     });
 
     afterAll(() => {
@@ -64,10 +65,12 @@ describe("createOrFindJournalEntry", () => {
       tempDir = createTempDir();
       const isoDate1 = "2023-04-01";
       const isoDate2 = "2023-04-02";
-      const original = createOrFindJournalEntry(isoDate1, tempDir);
+      const original: JournalResult = createOrFindJournalEntry(
+        isoDate1, { projectRoot: tempDir },
+      );
       fs.appendFileSync(original.markdownFilePath,
         original.headerSnippet, { encoding: "utf8" });
-      result = createOrFindJournalEntry(isoDate2, tempDir);
+      result = createOrFindJournalEntry(isoDate2, { projectRoot: tempDir });
     });
 
     afterAll(() => {
@@ -94,16 +97,67 @@ describe("createOrFindJournalEntry", () => {
       tempDir = createTempDir();
       const isoDate1 = "2023-04-03";
       const isoDate2 = "2023-04-01";
-      const original = createOrFindJournalEntry(isoDate1, tempDir);
+      const original: JournalResult = createOrFindJournalEntry(
+        isoDate1, { projectRoot: tempDir },
+      );
       fs.appendFileSync(original.markdownFilePath,
         original.headerSnippet, { encoding: "utf8" });
-      result = createOrFindJournalEntry(isoDate2, tempDir);
+      result = createOrFindJournalEntry(
+        isoDate2, { projectRoot: tempDir },
+      );
     });
 
     afterAll(() => {
       if (tempDir) {
         deleteTempDir(tempDir);
       }
+    });
+
+    it("prepares a L2 header snippet for the day", () => {
+      expect(result.headerSnippet).toBe("## 2023-04-01\n\n");
+    });
+
+    it("identifies the correct L2 header insertion point", () => {
+      expect(result.line).toBe(2);
+      expect(result.character).toBe(0);
+    });
+  });
+
+  describe("no projectRoot is given", () => {
+    let tempDir: string;
+    let Paths: typeof _Paths;
+    let result: JournalResult;
+
+    beforeAll(() => {
+      tempDir = createTempDir();
+      const isoDate = "2023-04-01";
+      Paths = {
+        dataPath: path.join(tempDir, "fake-xdg-data", "mdmonthly"),
+      };
+      result = createOrFindJournalEntry(isoDate, { paths: Paths });
+    });
+
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
+    });
+
+    it("creates a subdirectory of the XDG data directory", () => {
+      expect(
+        fs.existsSync(path.join(tempDir, "fake-xdg-data", "mdmonthly", "2023")),
+      )
+        .toBe(true);
+    });
+
+    it("creates a file inside the subdirectory", () => {
+      expect(fs.existsSync(result.markdownFilePath)).toBe(true);
+    });
+
+    it("includes a L1 header in the file", () => {
+      const fileContent: string =
+        fs.readFileSync(result.markdownFilePath, "utf8");
+      expect(fileContent).toContain("# 2023-04\n\n");
     });
 
     it("prepares a L2 header snippet for the day", () => {
