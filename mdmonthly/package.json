@@ -16,7 +16,8 @@
     },
     "devDependencies": {
       "@types/node": "Keep the upper bound in sync with the lower bound specified in `engines`",
-      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release appears"
+      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release appears",
+      "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
     }
   },
   "dependencies": {
