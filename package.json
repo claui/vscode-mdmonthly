@@ -4,6 +4,17 @@
   "engines": {
     "node": "^16.0.0"
   },
+  "comments": {
+    "devDependencies": {
+      "@types/node": "Keep the upper bound in sync with the lower bound specified in `engines`.",
+      "@types/vscode": "For details, see section *Upgrading the VS Code API version* in `README.md`.",
+      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release is out.",
+      "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
+    },
+    "resolutions": {
+      "@vscode/vsce": "Private patch for Yarn v3 compatibility. Keep in sync with the version of the `@vscode/vsce` dependency."
+    }
+  },
   "dependencies": {
     "mdmonthly": "workspace:^"
   },

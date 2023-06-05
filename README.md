@@ -168,7 +168,7 @@ dependencies. That includes the `@types`, `@typescript-eslint`, and
 `yarn upgrade-yarn-itself` section).
 
 Also excluded is the `@types/vscode` package. For details, see
-section _Upgrading the VS Code API_.
+section _Upgrading the VS Code API version_.
 
 ### yarn upgrade-yarn-itself
 

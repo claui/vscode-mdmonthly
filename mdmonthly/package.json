@@ -11,11 +11,11 @@
   "types": "./types/index.d.ts",
   "comments": {
     "dependencies": {
-      "@js-temporal/polyfill": "Remove this dependency once all supported Node.js versions have adopted TC39",
-      "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM; see also: https://jestjs.io/docs/ecmascript-modules"
+      "@js-temporal/polyfill": "Remove this dependency once all supported Node.js versions have adopted TC39.",
+      "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM. See also: https://jestjs.io/docs/ecmascript-modules"
     },
     "devDependencies": {
-      "@types/node": "Keep the upper bound in sync with the lower bound specified in `engines`",
+      "@types/node": "Keep this pinned to the Node.js major version specified in `engines`",
       "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release appears",
       "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
     }
