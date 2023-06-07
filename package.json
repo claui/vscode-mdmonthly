@@ -5,8 +5,10 @@
     "node": "^16.0.0"
   },
   "comments": {
+    "dependencies": {
+      "@js-temporal/polyfill": "Remove this dependency once VS Code comes with a version of Node.js that has adopted TC39’s Temporal proposal."
+    },
     "devDependencies": {
-      "@js-temporal/polyfill": "Remove this dependency once VS Code comes with a version of Node.js that has adopted TC39.",
       "@types/node": "Keep this pinned to the Node.js major version that ships with VS Code.",
       "@types/vscode": "For details, see section *Upgrading the VS Code API version* in `README.md`.",
       "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release is out.",
@@ -17,6 +19,7 @@
     }
   },
   "dependencies": {
+    "@js-temporal/polyfill": "^0.4.4",
     "mdmonthly": "workspace:^"
   },
   "devDependencies": {
