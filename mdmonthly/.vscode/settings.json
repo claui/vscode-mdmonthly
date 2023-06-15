@@ -23,6 +23,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "eslint.format.enable": true,
+  "eslint.nodePath": ".yarn/sdks",
   "files.exclude": {
     "**/.git": true,
     "**/lib": true

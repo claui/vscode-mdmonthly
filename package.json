@@ -5,13 +5,24 @@
     "node": "^16.0.0"
   },
   "comments": {
+    "devDependencies": {
+      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release is out.",
+      "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
+    },
     "resolutions": {
       "@vscode/vsce": "Private patch for Yarn v3 compatibility. Keep in sync with the version of the `@vscode/vsce` dependency."
     }
   },
+  "devDependencies": {
+    "@yarnpkg/sdks": "<=2.x || ^3.0.0",
+    "typescript": "<=5.0.x"
+  },
   "packageManager": "yarn@3.6.0",
   "resolutions": {
     "@vscode/vsce@^2.19.0": "patch:@vscode/vsce@npm:2.19.0#./.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch"
+  },
+  "scripts": {
+    "postinstall": "yarn sdks vscode"
   },
   "workspaces": [
     "extension",

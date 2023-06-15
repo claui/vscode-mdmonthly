@@ -23,6 +23,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "eslint.format.enable": true,
+  "eslint.nodePath": ".yarn/sdks",
   "files.exclude": {
     "**/.git": true,
     "**/mdmonthly/lib": true
@@ -47,5 +48,6 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": ".yarn/sdks/typescript/lib"
 }
