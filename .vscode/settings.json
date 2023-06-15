@@ -13,7 +13,7 @@
     "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "vscode.typescript-language-features",
     "editor.formatOnSave": true,
     "editor.rulers": [
       80
@@ -23,7 +23,6 @@
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "eslint.format.enable": true,
-  "eslint.nodePath": ".yarn/sdks",
   "files.exclude": {
     "**/.git": true,
     "**/mdmonthly/lib": true
@@ -48,6 +47,5 @@
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": ".yarn/sdks/typescript/lib"
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
