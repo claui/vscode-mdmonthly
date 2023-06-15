@@ -16,7 +16,6 @@
     },
     "devDependencies": {
       "@types/node": "Keep this pinned to the Node.js major version specified in `engines`",
-      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release is out.",
       "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
     }
   },
@@ -30,7 +29,6 @@
     "@types/tmp": "^0.2.3",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
-    "@yarnpkg/sdks": "<=2.x || ^3.0.0",
     "del-cli": "^5.0.0",
     "eslint": "^8.42.0",
     "eslint-plugin-jest": "^27.2.1",
@@ -44,10 +42,8 @@
   },
   "scripts": {
     "clean": "yarn run -B del dist lib types",
-    "clean-install": "yarn install && git checkout -- '.yarn/*/LICENSE'",
     "compile": "yarn run -B tsc",
     "lint": "yarn run -B eslint --max-warnings 0 src",
-    "postinstall": "yarn sdks vscode",
     "repatch": "git add -- package.json && yarn patch-commit -s \"$1\" && git checkout -- package.json && yarn clean-install",
     "test": "yarn run -B tsc && yarn run -B jest",
     "upgrade-all": "printf >&2 '%s\\n\\t%s\\n' 'Run the following command line manually:' 'yarn set version stable && yarn install && yarn upgrade-packages' && false",

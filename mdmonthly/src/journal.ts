@@ -17,7 +17,7 @@ export type JournalResult = {
 
 function readLines(
   year: string, month: string, yearDirectory: string,
-  { fs = _fs }: { fs ?: Fs } = {},
+  { fs = _fs }: { fs?: Fs } = {},
 ) {
   const markdownFileName = `${year}-${month}.md`;
   const markdownFilePath: string = path.join(yearDirectory, markdownFileName);
@@ -76,7 +76,7 @@ export function createOrFindJournalEntry(
   }
 
   const { lines, markdownFilePath }:
-  { lines: string[]; markdownFilePath: string; }
+    { lines: string[]; markdownFilePath: string; }
     = readLines(year, month, yearDirectory);
 
   return {

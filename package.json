@@ -22,6 +22,8 @@
     "@vscode/vsce@^2.19.0": "patch:@vscode/vsce@npm:2.19.0#./.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch"
   },
   "scripts": {
+    "clean-install": "yarn install && git checkout -- .vscode/settings.json '.yarn/*/LICENSE'",
+    "lint": "yarn workspace mdmonthly lint && yarn workspace extension lint",
     "postinstall": "yarn sdks vscode"
   },
   "workspaces": [
