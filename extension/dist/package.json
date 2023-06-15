@@ -1,0 +1,43 @@
+{
+  "name": "mdmonthly",
+  "version": "0.1.0-snapshot",
+  "publisher": "claui",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "license": "SEE LICENSE IN README.md",
+  "displayName": "Markdown Monthly",
+  "description": "Simple journal. One month, one Markdown file.",
+  "categories": [],
+  "keywords": [],
+  "preview": true,
+  "main": "build/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "mdmonthly.action.showLog",
+        "title": "Markdown Monthly: Show extension log"
+      },
+      {
+        "command": "mdmonthly.action.openJournalEntry",
+        "title": "Markdown Monthly: Open journal entry"
+      }
+    ],
+    "configuration": {
+      "title": "Markdown Monthly",
+      "properties": {
+        "mdmonthly.executablePath": {
+          "type": "string",
+          "markdownDescription": "Path to the `foo` executable, e. g. `/usr/local/bin/foo`.  \nLeave blank if it’s already on your `PATH`.",
+          "scope": "machine-overridable"
+        }
+      }
+    },
+    "configurationDefaults": {}
+  },
+  "extensionKind": [
+    "workspace"
+  ],
+  "activationEvents": [],
+  "repository": "github:claui/vscode-mdmonthly"
+}

@@ -16,7 +16,7 @@
     },
     "devDependencies": {
       "@types/node": "Keep this pinned to the Node.js major version specified in `engines`",
-      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release appears",
+      "@yarnpkg/sdks": "Replace the <=2.x || ^3.0.0 restriction with the latest stable version once a stable 3.x release is out.",
       "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
     }
   },
@@ -54,6 +54,5 @@
     "upgrade-lockfile": "yarn up -R '**' && yarn clean-install",
     "upgrade-packages": "yarn up '**' '@types/node@<=16.x' '@yarnpkg/sdks@<=2.x || ^3.0.0' 'env-paths@<=2.x' 'typescript@<=5.0.x' && yarn up -R '**' && yarn clean-install",
     "upgrade-yarn-itself": "printf >&2 '%s\\n\\t%s\\n' 'Run the following command line manually:' 'yarn set version stable && yarn install && yarn clean-install' && false"
-  },
-  "packageManager": "yarn@3.6.0"
+  }
 }

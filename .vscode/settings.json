@@ -40,8 +40,7 @@
     "MD033": false
   },
   "search.exclude": {
-    "/extension/build": true,
-    "/extension/dist": true,
+    "/extension/dist/lib": true,
     "/extension/work": true,
     "/mdmonthly/build": true,
     "/mdmonthly/dist": true,
