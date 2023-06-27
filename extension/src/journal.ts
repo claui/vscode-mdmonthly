@@ -19,12 +19,16 @@ function validateInput(value: string): InputBoxValidationMessage | undefined {
   } catch (error) {
     if (error instanceof RangeError) {
       return {
-        message: error.message,
+        message: capitalize(error.message),
         severity: InputBoxValidationSeverity.Error,
       };
     }
     throw error;
   }
+}
+
+function capitalize(s: string): string {
+  return s[0].toUpperCase() + s.slice(1);
 }
 
 async function queryIsoDate() {
