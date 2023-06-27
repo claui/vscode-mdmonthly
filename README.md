@@ -326,7 +326,6 @@ source code repository:
 | `./.yarn/releases` | The `yarn` package manager | BSD-2-Clause | [License](./.yarn/releases/LICENSE) |
 | `./.yarn/sdks` | SDK files for `yarn` | BSD-2-Clause | [License](./.yarn/sdks/LICENSE) |
 | `./extension` | Front-end source code for this VS Code extension | Apache-2.0 | [License](./extension/LICENSE.txt)<br>with [License header](./extension/README.md#license) |
-| `./mdmonthly` | Source code for the back-end module | Apache-2.0 | [License](./mdmonthly/LICENSE.txt)<br>with [License header](./mdmonthly/README.md#license) |
 
 In each of the directories the table mentions, you will find one
 license file, named `LICENSE` or `LICENSE.txt`.  
@@ -340,4 +339,4 @@ Copyright (c) 2023 Claudia Pellegrino
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-For a copy of the License, see [LICENSE.txt](LICENSE.txt).
+For a copy of the License, see [LICENSE](LICENSE).
