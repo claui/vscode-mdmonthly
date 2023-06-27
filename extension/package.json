@@ -23,6 +23,7 @@
     "@vscode/vsce": "^2.19.0",
     "del-cli": "^5.0.0",
     "esbuild": "^0.18.10",
+    "esbuild-copy-static-files": "^0.1.0",
     "eslint": "^8.43.0",
     "ovsx": "^0.8.1",
     "semver": "^7.5.3",
@@ -31,13 +32,13 @@
     "typescript": "<=5.0.x"
   },
   "scripts": {
-    "ci-package": "mkdir -p extension/dist && yarn run -B vsce package --no-dependencies --yarn --cwd extension --githubBranch main/extension --out extension/dist",
-    "clean": "yarn run -B del extension/build extension/dist extension/types extension/work",
-    "compile": "yarn run -B tsc && yarn run -B esbuild --bundle --external:vscode --outdir=./build/ --platform=node ./work/tsc-out/extension.js",
+    "ci-package": "mkdir -p dist && yarn run -B vsce package --no-dependencies --yarn --cwd build --githubBranch main/extension --out dist",
+    "clean": "yarn run -B del build dist types work",
+    "compile": "yarn run -B tsc && contrib/build.mjs",
     "lint": "yarn run -B eslint --max-warnings 0 src",
     "login": "yarn run -B vsce login claui",
     "package": "yarn clean && yarn compile && yarn ci-package",
-    "publish-vsce": "yarn run -B vsce publish --no-dependencies --yarn --cwd extension --githubBranch main/extension",
+    "publish-vsce": "yarn run -B vsce publish --no-dependencies --yarn --cwd build --githubBranch main/extension",
     "repatch": "git add -- package.json && yarn patch-commit -s \"$1\" && git checkout -- package.json && yarn clean-install",
     "vscode:prepublish": "yarn clean && yarn compile"
   }

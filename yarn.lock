@@ -2808,6 +2808,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esbuild-copy-static-files@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "esbuild-copy-static-files@npm:0.1.0"
+  checksum: f04ad812b115baa52debcaea0f08fc676c8372fa01df3f0f2bca8eaa958b56ed216f48b6cc3753df78c104761f4c82f835eab8432b14ff7823288d713cb28f21
+  languageName: node
+  linkType: hard
+
 "esbuild@npm:^0.18.10":
   version: 0.18.10
   resolution: "esbuild@npm:0.18.10"
@@ -3137,6 +3144,7 @@ __metadata:
     "@vscode/vsce": ^2.19.0
     del-cli: ^5.0.0
     esbuild: ^0.18.10
+    esbuild-copy-static-files: ^0.1.0
     eslint: ^8.43.0
     mdmonthly: "workspace:^"
     ovsx: ^0.8.1

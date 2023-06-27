@@ -10,8 +10,8 @@
   "description": "Simple journal. One month, one Markdown file.",
   "categories": [],
   "keywords": [],
-  "preview": true,
-  "main": "build/extension.js",
+  "preview": false,
+  "main": "extension.js",
   "contributes": {
     "commands": [
       {
@@ -22,18 +22,7 @@
         "command": "mdmonthly.action.openJournalEntry",
         "title": "Markdown Monthly: Open journal entry"
       }
-    ],
-    "configuration": {
-      "title": "Markdown Monthly",
-      "properties": {
-        "mdmonthly.executablePath": {
-          "type": "string",
-          "markdownDescription": "Path to the `foo` executable, e. g. `/usr/local/bin/foo`.  \nLeave blank if it’s already on your `PATH`.",
-          "scope": "machine-overridable"
-        }
-      }
-    },
-    "configurationDefaults": {}
+    ]
   },
   "extensionKind": [
     "workspace"

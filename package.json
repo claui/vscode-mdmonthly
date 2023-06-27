@@ -22,9 +22,13 @@
     "@vscode/vsce@^2.19.0": "patch:@vscode/vsce@npm:2.19.0#./.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch"
   },
   "scripts": {
+    "clean": "yarn workspace extension clean && yarn workspace mdmonthly clean",
     "clean-install": "yarn install && git checkout -- .vscode/settings.json '.yarn/*/LICENSE'",
+    "compile": "yarn workspace mdmonthly compile && yarn workspace extension compile",
     "lint": "yarn workspace mdmonthly lint && yarn workspace extension lint",
+    "package": "yarn workspace mdmonthly compile && yarn workspace extension package",
     "postinstall": "yarn sdks vscode",
+    "test": "yarn workspace mdmonthly test",
     "upgrade-all": "printf >&2 '%s\\n\\t%s\\n' 'Run the following command line manually:' 'yarn set version stable && yarn install && yarn upgrade-packages' && false",
     "upgrade-lockfile": "yarn up -R '**' && yarn clean-install",
     "upgrade-packages": "yarn up '**' '@types/node@<=16.x' '@types/vscode@=1.76' '@yarnpkg/sdks@<=2.x || ^3.0.0' 'env-paths@<=2.x' 'typescript@<=5.0.x' && yarn up -R '**' && yarn clean-install",
