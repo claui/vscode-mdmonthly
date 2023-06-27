@@ -14,6 +14,7 @@
     }
   },
   "devDependencies": {
+    "@types/jest": "^29.5.2",
     "@yarnpkg/sdks": "<=2.x || ^3.0.0",
     "typescript": "<=5.0.x"
   },
