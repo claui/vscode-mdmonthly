@@ -25,7 +25,7 @@
     "clean-install": "yarn install && git checkout -- .vscode/settings.json '.yarn/*/LICENSE'",
     "lint": "yarn workspace mdmonthly lint && yarn workspace extension lint",
     "postinstall": "yarn sdks vscode",
-    "upgrade-packages": "yarn up '**' '@types/node@<=16.x' '@yarnpkg/sdks@<=2.x || ^3.0.0' 'env-paths@<=2.x' 'typescript@<=5.0.x' && yarn up -R '**' && yarn clean-install"
+    "upgrade-packages": "yarn up '**' '@types/node@<=16.x' '@types/vscode@=1.76' '@yarnpkg/sdks@<=2.x || ^3.0.0' 'env-paths@<=2.x' 'typescript@<=5.0.x' && yarn up -R '**' && yarn clean-install"
   },
   "workspaces": [
     "extension",
