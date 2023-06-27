@@ -3,7 +3,6 @@ import {
   InputBoxValidationSeverity,
   Position,
   Range,
-  TextDocument,
   TextEditor,
   TextEditorEdit,
   window,
@@ -12,7 +11,10 @@ import {
 
 import { Temporal } from "@js-temporal/polyfill";
 
-import { createOrFindJournalEntry, JournalResult, JournalResultEntry } from "mdmonthly";
+import {
+  createOrFindJournalEntry,
+  JournalResult,
+} from "mdmonthly";
 
 import log from "./log";
 
@@ -55,23 +57,22 @@ export async function openJournalEntry() {
   const journalResult: JournalResult = createOrFindJournalEntry(chosenDate);
   log.info(`Result: ${JSON.stringify(journalResult)}`);
 
-  const textDocument: TextDocument = await workspace
+  const textDocument = await workspace
     .openTextDocument(journalResult.markdownFilePath);
   log.info(`Text document: ${JSON.stringify(textDocument)}`)
 
   const position = new Position(journalResult.line, journalResult.character);
-  const editor: TextEditor = await window
-    .showTextDocument(textDocument, {
-      selection: new Range(position, position),
-    });
+  const editor: TextEditor = await window.showTextDocument(textDocument, {
+    selection: new Range(position, position),
+  });
   log.info(`Editor: ${JSON.stringify(textDocument)}`)
 
-  const entry: JournalResultEntry = journalResult.entry;
+  const { entry } = journalResult;
   if (entry.exists) {
-    log.info(`Entry already exists at position ${position}`);
+    log.info(`Entry already exists at position ${JSON.stringify(position)}`);
     return;
   }
-  log.info(`Inserting entry at position ${position}`);
+  log.info(`Inserting entry at position ${JSON.stringify(position)}`);
   if (!await editor.edit((builder: TextEditorEdit) => {
     builder.insert(position, entry.headerSnippetToInsert);
   })) {
