@@ -33,7 +33,7 @@
   "scripts": {
     "ci-package": "mkdir -p extension/dist && yarn run -B vsce package --no-dependencies --yarn --cwd extension --githubBranch main/extension --out extension/dist",
     "clean": "yarn run -B del extension/build extension/dist extension/types extension/work",
-    "compile": "yarn run -B tsc -p extension/ && yarn run -B esbuild --bundle --external:vscode --outdir=./extension/build/ --platform=node ./extension/work/tsc-out/extension.js",
+    "compile": "yarn run -B tsc && yarn run -B esbuild --bundle --external:vscode --outdir=./build/ --platform=node ./work/tsc-out/extension.js",
     "lint": "yarn run -B eslint --max-warnings 0 src",
     "login": "yarn run -B vsce login claui",
     "package": "yarn clean && yarn compile && yarn ci-package",
