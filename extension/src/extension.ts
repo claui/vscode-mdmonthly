@@ -1,4 +1,4 @@
-import { ExtensionContext, commands } from "vscode";
+import { commands, ExtensionContext } from "vscode";
 
 import { openJournalEntry } from "./journal";
 import log from "./log";
