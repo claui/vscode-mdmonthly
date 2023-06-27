@@ -1,12 +1,18 @@
 import {
   InputBoxValidationMessage,
   InputBoxValidationSeverity,
+  Position,
+  Range,
+  TextDocument,
+  TextEditor,
+  TextEditorEdit,
   window,
+  workspace,
 } from "vscode";
 
 import { Temporal } from "@js-temporal/polyfill";
 
-import { createOrFindJournalEntry, JournalResult } from "mdmonthly";
+import { createOrFindJournalEntry, JournalResult, JournalResultEntry } from "mdmonthly";
 
 import log from "./log";
 
@@ -48,4 +54,27 @@ export async function openJournalEntry() {
   }
   const journalResult: JournalResult = createOrFindJournalEntry(chosenDate);
   log.info(`Result: ${JSON.stringify(journalResult)}`);
+
+  const textDocument: TextDocument = await workspace
+    .openTextDocument(journalResult.markdownFilePath);
+  log.info(`Text document: ${JSON.stringify(textDocument)}`)
+
+  const position = new Position(journalResult.line, journalResult.character);
+  const editor: TextEditor = await window
+    .showTextDocument(textDocument, {
+      selection: new Range(position, position),
+    });
+  log.info(`Editor: ${JSON.stringify(textDocument)}`)
+
+  const entry: JournalResultEntry = journalResult.entry;
+  if (entry.exists) {
+    log.info(`Entry already exists at position ${position}`);
+    return;
+  }
+  log.info(`Inserting entry at position ${position}`);
+  if (!await editor.edit((builder: TextEditorEdit) => {
+    builder.insert(position, entry.headerSnippetToInsert);
+  })) {
+    await window.showErrorMessage(`Unable to insert entry for ${chosenDate}.`);
+  }
 }

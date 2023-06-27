@@ -8,9 +8,13 @@ import { Paths } from "./paths-deps";
 
 const { PlainDate } = Temporal;
 
+export type JournalResultEntry =
+  | { exists: true }
+  | { exists: false, headerSnippetToInsert: string };
+
 export type JournalResult = {
   markdownFilePath: string;
-  headerSnippet: string;
+  entry: JournalResultEntry;
   line: number;
   character: number;
 };
@@ -41,19 +45,21 @@ function splitDate(date: Temporal.PlainDate): {
   }
 }
 
+type InsertLine = { exists: boolean, line: number };
+
 function calculateInsertLine(
-  lines: string[], date: Temporal.PlainDate): number {
+  lines: string[], date: Temporal.PlainDate): InsertLine {
   for (let i: number = 0; i < lines.length; i++) {
     if (lines[i].startsWith("## ")) {
       const entryDate: Temporal.PlainDate
         = PlainDate.from(lines[i].substring(3));
-      if (PlainDate.compare(entryDate, date) > 0) {
-        return i;
+      if (PlainDate.compare(entryDate, date) >= 0) {
+        return { exists: date.equals(entryDate), line: i };
       }
     }
   }
 
-  return lines.length - 1;
+  return { exists: false, line: lines.length - 1 };
 }
 
 type JournalOptions = { projectRoot?: string, fs?: Fs, paths?: typeof Paths };
@@ -68,7 +74,7 @@ export function createOrFindJournalEntry(
 ): JournalResult {
   const date: Temporal.PlainDate = PlainDate.from(isoDate);
   const { year, month, day } = splitDate(date);
-  const headerSnippet = `## ${year}-${month}-${day}\n\n`;
+  const headerSnippetToInsert = `## ${year}-${month}-${day}\n\n`;
   const yearDirectory: string = path.join(projectRoot ?? paths.dataPath, year);
 
   if (!fs.existsSync(yearDirectory)) {
@@ -79,10 +85,12 @@ export function createOrFindJournalEntry(
     { lines: string[]; markdownFilePath: string; }
     = readLines(year, month, yearDirectory);
 
+  const { exists, line } = calculateInsertLine(lines, date);
+
   return {
     markdownFilePath,
-    headerSnippet,
-    line: calculateInsertLine(lines, date),
+    entry: exists ? { exists } : { exists, headerSnippetToInsert },
+    line,
     character: 0,
   };
 }

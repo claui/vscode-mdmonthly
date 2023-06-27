@@ -48,7 +48,10 @@ describe("createOrFindJournalEntry", () => {
     });
 
     it("prepares a L2 header snippet for the day", () => {
-      expect(result.headerSnippet).toBe("## 2023-04-01\n\n");
+      expect(result.entry).toEqual({
+        exists: false,
+        headerSnippetToInsert: "## 2023-04-01\n\n",
+      });
     });
 
     it("identifies the correct L2 header insertion point", () => {
@@ -68,8 +71,11 @@ describe("createOrFindJournalEntry", () => {
       const original: JournalResult = createOrFindJournalEntry(
         isoDate1, { projectRoot: tempDir },
       );
+      if (original.entry.exists) {
+        fail("Original entry exists");
+      }
       fs.appendFileSync(original.markdownFilePath,
-        original.headerSnippet, { encoding: "utf8" });
+        original.entry.headerSnippetToInsert, { encoding: "utf8" });
       result = createOrFindJournalEntry(isoDate2, { projectRoot: tempDir });
     });
 
@@ -80,7 +86,10 @@ describe("createOrFindJournalEntry", () => {
     });
 
     it("prepares a L2 header snippet for the day", () => {
-      expect(result.headerSnippet).toBe("## 2023-04-02\n\n");
+      expect(result.entry).toEqual({
+        exists: false,
+        headerSnippetToInsert: "## 2023-04-02\n\n",
+      });
     });
 
     it("identifies the correct L2 header insertion point", () => {
@@ -100,8 +109,11 @@ describe("createOrFindJournalEntry", () => {
       const original: JournalResult = createOrFindJournalEntry(
         isoDate1, { projectRoot: tempDir },
       );
+      if (original.entry.exists) {
+        fail("Original entry exists");
+      };
       fs.appendFileSync(original.markdownFilePath,
-        original.headerSnippet, { encoding: "utf8" });
+        original.entry.headerSnippetToInsert, { encoding: "utf8" });
       result = createOrFindJournalEntry(
         isoDate2, { projectRoot: tempDir },
       );
@@ -114,7 +126,46 @@ describe("createOrFindJournalEntry", () => {
     });
 
     it("prepares a L2 header snippet for the day", () => {
-      expect(result.headerSnippet).toBe("## 2023-04-01\n\n");
+      expect(result.entry).toEqual({
+        exists: false,
+        headerSnippetToInsert: "## 2023-04-01\n\n",
+      });
+    });
+
+    it("identifies the correct L2 header insertion point", () => {
+      expect(result.line).toBe(2);
+      expect(result.character).toBe(0);
+    });
+  });
+
+  describe("a Markdown file exists and contains the given entry", () => {
+    let tempDir: string;
+    let result: JournalResult;
+
+    beforeAll(() => {
+      tempDir = createTempDir();
+      const isoDate = "2023-04-01";
+      const original: JournalResult = createOrFindJournalEntry(
+        isoDate, { projectRoot: tempDir },
+      );
+      if (original.entry.exists) {
+        fail("Original entry exists");
+      };
+      fs.appendFileSync(original.markdownFilePath,
+        original.entry.headerSnippetToInsert, { encoding: "utf8" });
+      result = createOrFindJournalEntry(
+        isoDate, { projectRoot: tempDir },
+      );
+    });
+
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
+    });
+
+    it("prepares a L2 header snippet for the day", () => {
+      expect(result.entry.exists).toBe(true);
     });
 
     it("identifies the correct L2 header insertion point", () => {
@@ -161,7 +212,10 @@ describe("createOrFindJournalEntry", () => {
     });
 
     it("prepares a L2 header snippet for the day", () => {
-      expect(result.headerSnippet).toBe("## 2023-04-01\n\n");
+      expect(result.entry).toEqual({
+        exists: false,
+        headerSnippetToInsert: "## 2023-04-01\n\n",
+      });
     });
 
     it("identifies the correct L2 header insertion point", () => {
