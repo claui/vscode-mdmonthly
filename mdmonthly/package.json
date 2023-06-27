@@ -45,9 +45,6 @@
     "compile": "yarn run -B tsc",
     "lint": "yarn run -B eslint --max-warnings 0 src",
     "repatch": "git add -- package.json && yarn patch-commit -s \"$1\" && git checkout -- package.json && yarn clean-install",
-    "test": "yarn run -B tsc && yarn run -B jest",
-    "upgrade-all": "printf >&2 '%s\\n\\t%s\\n' 'Run the following command line manually:' 'yarn set version stable && yarn install && yarn upgrade-packages' && false",
-    "upgrade-lockfile": "yarn up -R '**' && yarn clean-install",
-    "upgrade-yarn-itself": "printf >&2 '%s\\n\\t%s\\n' 'Run the following command line manually:' 'yarn set version stable && yarn install && yarn clean-install' && false"
+    "test": "yarn run -B tsc && yarn run -B jest"
   }
 }
