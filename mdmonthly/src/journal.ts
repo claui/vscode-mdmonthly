@@ -55,7 +55,7 @@ function calculateInsertLine(
   for (let i: number = 0; i < lines.length; i++) {
     if (lines[i].startsWith("## ")) {
       const entryDate: Temporal.PlainDate
-        = PlainDate.from(lines[i].substring(3));
+        = PlainDate.from(lines[i].substring(lines[i].length - 10));
       if (PlainDate.compare(entryDate, date) >= 0) {
         return { exists: date.equals(entryDate), line: i };
       }

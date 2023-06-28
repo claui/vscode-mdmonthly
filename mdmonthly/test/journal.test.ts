@@ -51,7 +51,7 @@ describe("createOrFindJournalEntry", () => {
     it("prepares a L2 header snippet for the day", () => {
       expect(result.entry).toEqual({
         exists: false,
-        headerSnippetToInsert: "## 2023-04-01\n\n",
+        headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
       });
     });
 
@@ -101,7 +101,7 @@ describe("createOrFindJournalEntry", () => {
     it("prepares a L2 header snippet for the day", () => {
       expect(result.entry).toEqual({
         exists: false,
-        headerSnippetToInsert: "## 2023-04-01\n\n",
+        headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
       });
     });
 
@@ -112,6 +112,15 @@ describe("createOrFindJournalEntry", () => {
   });
 
   describe.each([
+    {
+      style: "long", fileContent: dedent`
+        # 2023-04
+
+        ## Monday, 2023-04-03
+
+        Test content
+      `
+    },
     {
       style: "short", fileContent: dedent`
         # 2023-04
@@ -143,10 +152,6 @@ describe("createOrFindJournalEntry", () => {
         }
       });
 
-      const newDateFuture = "2023-04-04";
-      const newDatePast = "2023-04-01";
-      const newDateExact = "2023-04-03";
-
       describe.each([
         {
           caseDescription: "is in the past",
@@ -156,7 +161,7 @@ describe("createOrFindJournalEntry", () => {
             character: 0,
             entry: {
               exists: false,
-              headerSnippetToInsert: "## 2023-04-01\n\n",
+              headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
             },
           },
         },
@@ -179,7 +184,7 @@ describe("createOrFindJournalEntry", () => {
             character: 0,
             entry: {
               exists: false,
-              headerSnippetToInsert: "## 2023-04-04\n\n",
+              headerSnippetToInsert: "## Tuesday, 2023-04-04\n\n",
             },
           },
         },
