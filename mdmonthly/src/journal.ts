@@ -12,12 +12,12 @@ export type JournalResultEntry =
   | { exists: true }
   | { exists: false, headerSnippetToInsert: string };
 
-export type JournalResult = {
+export interface JournalResult {
   markdownFilePath: string;
   entry: JournalResultEntry;
   line: number;
   character: number;
-};
+}
 
 function readLines(
   year: string, month: string, yearDirectory: string,
@@ -45,7 +45,10 @@ function splitDate(date: Temporal.PlainDate): {
   }
 }
 
-type InsertLine = { exists: boolean, line: number };
+interface InsertLine {
+  exists: boolean;
+  line: number;
+}
 
 function calculateInsertLine(
   lines: string[], date: Temporal.PlainDate): InsertLine {
@@ -62,7 +65,11 @@ function calculateInsertLine(
   return { exists: false, line: lines.length - 1 };
 }
 
-type JournalOptions = { projectRoot?: string, fs?: Fs, paths?: typeof Paths };
+interface JournalOptions {
+  projectRoot?: string;
+  fs?: Fs;
+  paths?: typeof Paths;
+}
 
 export function createOrFindJournalEntry(
   isoDate: string,
