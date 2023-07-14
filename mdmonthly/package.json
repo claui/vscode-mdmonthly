@@ -15,8 +15,7 @@
       "env-paths": "Replace the <=2.x restriction with the latest stable version once Jest offers stable support for ESM. See also: https://jestjs.io/docs/ecmascript-modules"
     },
     "devDependencies": {
-      "@types/node": "Keep this pinned to the Node.js major version specified in `engines`",
-      "typescript": "Restricted for compatibility with `eslint-plugin`; when upgrading both, run `yarn lint` to re-check."
+      "@types/node": "Keep this pinned to the Node.js major version specified in `engines`"
     }
   },
   "dependencies": {
@@ -38,7 +37,7 @@
     "tmp": "^0.2.1",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "typescript": "<=5.0.x"
+    "typescript": "^5.1.6"
   },
   "scripts": {
     "clean": "yarn run -B del dist lib types",
