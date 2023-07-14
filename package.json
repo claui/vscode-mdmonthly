@@ -14,11 +14,11 @@
     }
   },
   "devDependencies": {
-    "@types/jest": "^29.5.2",
+    "@types/jest": "^29.5.3",
     "@yarnpkg/sdks": "<=2.x || ^3.0.0",
     "typescript": "<=5.0.x"
   },
-  "packageManager": "yarn@3.6.0",
+  "packageManager": "yarn@3.6.1",
   "resolutions": {
     "@vscode/vsce@^2.19.0": "patch:@vscode/vsce@npm:2.19.0#./.yarn/patches/@vscode-vsce-npm-2.19.0-c171711221.patch"
   },
