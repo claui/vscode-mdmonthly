@@ -96,9 +96,11 @@ Follow these steps to publish the extension to the Open VSX Registry:
 
 2. Make sure you have published the extension to the VS Code
    Extension Marketplace. This ensures that the version number has
-   been updated and that a `.vsix` file has been generated.
+   been updated.
 
-3. Run the `yarn ovsx publish` command with the correct
+3. Run `yarn package` to generate a `.vsix` package.
+
+4. Run the `yarn […] ovsx publish` command with the correct
    `extension/[…].vsix` file as the sole argument. Example in Bash:
 
    ```bash
