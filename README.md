@@ -123,7 +123,7 @@ pull request against `main`:
   git commit --edit -m "Release ${tag}"
   git tag "${tag}"
   git push --tags
-  gh release create --generate-notes "${tag}"
+  gh release create --draft --generate-notes "${tag}"
   gh pr create --fill --web
 )
 ```
