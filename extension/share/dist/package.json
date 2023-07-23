@@ -13,6 +13,16 @@
   "preview": false,
   "main": "extension.js",
   "contributes": {
+    "configuration": {
+      "title": "Markdown Monthly",
+      "properties": {
+        "mdmonthly.locale": {
+          "type": "string",
+          "markdownDescription": "[Locale identifier](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#locales_argument), e. g. `de-DE`.  \nIf left blank, uses a default locale.",
+          "scope": "machine-overridable"
+        }
+      }
+    },
     "commands": [
       {
         "command": "mdmonthly.action.showLog",
