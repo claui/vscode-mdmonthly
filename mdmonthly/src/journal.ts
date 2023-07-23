@@ -19,6 +19,10 @@ export interface JournalResult {
   character: number;
 }
 
+const DEFAULT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
+  weekday: "long", year: "numeric", month: "2-digit", day: "2-digit",
+};
+
 function readLines(
   year: string, month: string, yearDirectory: string,
   { fs = _fs }: { fs?: Fs } = {},
@@ -67,6 +71,8 @@ function calculateInsertLine(
 
 interface JournalOptions {
   projectRoot?: string;
+  locales?: string | string[];
+  dateFormatOptions?: Intl.DateTimeFormatOptions;
   fs?: Fs;
   paths?: typeof Paths;
 }

@@ -25,7 +25,10 @@ describe("createOrFindJournalEntry", () => {
     beforeAll(() => {
       tempDir = createTempDir();
       const isoDate = "2023-04-01";
-      result = createOrFindJournalEntry(isoDate, { projectRoot: tempDir });
+      result = createOrFindJournalEntry(isoDate, {
+        locales: "de-DE",
+        projectRoot: tempDir,
+      });
     });
 
     afterAll(() => {
@@ -51,7 +54,7 @@ describe("createOrFindJournalEntry", () => {
     it("prepares a L2 header snippet for the day", () => {
       expect(result.entry).toEqual({
         exists: false,
-        headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
+        headerSnippetToInsert: "<!-- 2023-04-01 -->\n## Samstag, 01.04.2023\n\n",
       });
     });
 
@@ -72,7 +75,10 @@ describe("createOrFindJournalEntry", () => {
       Paths = {
         dataPath: path.join(tempDir, "fake-xdg-data", "mdmonthly"),
       };
-      result = createOrFindJournalEntry(isoDate, { paths: Paths });
+      result = createOrFindJournalEntry(isoDate, {
+        locales: "de-DE",
+        paths: Paths,
+      });
     });
 
     afterAll(() => {
@@ -101,7 +107,7 @@ describe("createOrFindJournalEntry", () => {
     it("prepares a L2 header snippet for the day", () => {
       expect(result.entry).toEqual({
         exists: false,
-        headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
+        headerSnippetToInsert: "<!-- 2023-04-01 -->\n## Samstag, 01.04.2023\n\n",
       });
     });
 
@@ -116,7 +122,8 @@ describe("createOrFindJournalEntry", () => {
       style: "long", fileContent: dedent`
         # 2023-04
 
-        ## Monday, 2023-04-03
+        <!-- 2023-04-03 -->
+        ## Montag, 03.04.2023
 
         Test content
       `
@@ -125,7 +132,8 @@ describe("createOrFindJournalEntry", () => {
       style: "short", fileContent: dedent`
         # 2023-04
 
-        ## 2023-04-03
+        <!-- 2023-04-03 -->
+        ## 03.04.2023
 
         Test content
       `
@@ -161,7 +169,7 @@ describe("createOrFindJournalEntry", () => {
             character: 0,
             entry: {
               exists: false,
-              headerSnippetToInsert: "## Saturday, 2023-04-01\n\n",
+              headerSnippetToInsert: "<!-- 2023-04-01 -->\n## Samstag, 01.04.2023\n\n",
             },
           },
         },
@@ -180,11 +188,11 @@ describe("createOrFindJournalEntry", () => {
           caseDescription: "is in the future",
           newDate: "2023-04-04",
           expectedResult: {
-            line: 4,
+            line: 5,
             character: 0,
             entry: {
               exists: false,
-              headerSnippetToInsert: "## Tuesday, 2023-04-04\n\n",
+              headerSnippetToInsert: "<!-- 2023-04-04 -->\n## Dienstag, 04.04.2023\n\n",
             },
           },
         },
@@ -193,7 +201,10 @@ describe("createOrFindJournalEntry", () => {
           let result: JournalResult;
 
           beforeAll(() => {
-            result = createOrFindJournalEntry(newDate, { projectRoot: tempDir });
+            result = createOrFindJournalEntry(newDate, {
+              locales: "de-DE",
+              projectRoot: tempDir,
+            });
           });
 
           it("prepares a L2 header snippet for the day", () => {
