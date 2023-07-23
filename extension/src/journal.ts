@@ -54,7 +54,12 @@ export async function openJournalEntry() {
   if (!chosenDate) {
     return;
   }
-  const journalResult: JournalResult = createOrFindJournalEntry(chosenDate);
+  const locale: string | undefined = workspace
+    .getConfiguration("mdmonthly")
+    .get("locale");
+  const journalResult: JournalResult = createOrFindJournalEntry(chosenDate, {
+    locales: locale,
+  });
   log.info(`Result: ${JSON.stringify(journalResult)}`);
 
   const textDocument = await workspace
