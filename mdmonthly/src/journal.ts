@@ -1,6 +1,7 @@
 import _fs from "fs";
 import path from "path";
 
+import dedent from "ts-dedent";
 import { Temporal } from "@js-temporal/polyfill";
 
 import { Fs } from "./fs-deps";
@@ -22,6 +23,7 @@ export interface JournalResult {
 const DEFAULT_DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
   weekday: "long", year: "numeric", month: "2-digit", day: "2-digit",
 };
+const MARKER_REGEXP = /^<!-- (?<isoDate>\d{4}-\d{2}-\d{2}) -->$/;
 
 function readLines(
   year: string, month: string, yearDirectory: string,
@@ -56,10 +58,11 @@ interface InsertLine {
 
 function calculateInsertLine(
   lines: string[], date: Temporal.PlainDate): InsertLine {
-  for (let i: number = 0; i < lines.length; i++) {
-    if (lines[i].startsWith("## ")) {
-      const entryDate: Temporal.PlainDate
-        = PlainDate.from(lines[i].substring(lines[i].length - 10));
+  for (let i: number = 0; i < lines.length - 1; i++) {
+    const capturingMatch: RegExpExecArray | null = MARKER_REGEXP.exec(lines[i]);
+    if (capturingMatch?.groups && lines[i + 1].startsWith("## ")) {
+      const entryDate: Temporal.PlainDate =
+        PlainDate.from(capturingMatch.groups.isoDate);
       if (PlainDate.compare(entryDate, date) >= 0) {
         return { exists: date.equals(entryDate), line: i };
       }
@@ -81,13 +84,14 @@ export function createOrFindJournalEntry(
   isoDate: string,
   {
     projectRoot = void 0,
+    locales = void 0,
+    dateFormatOptions = DEFAULT_DATE_FORMAT_OPTIONS,
     fs = _fs,
     paths = Paths,
   }: JournalOptions = {},
 ): JournalResult {
   const date: Temporal.PlainDate = PlainDate.from(isoDate);
-  const { year, month, day } = splitDate(date);
-  const headerSnippetToInsert = `## ${year}-${month}-${day}\n\n`;
+  const { year, month, day: _ } = splitDate(date);
   const yearDirectory: string = path.join(projectRoot ?? paths.dataPath, year);
 
   if (!fs.existsSync(yearDirectory)) {
@@ -102,7 +106,15 @@ export function createOrFindJournalEntry(
 
   return {
     markdownFilePath,
-    entry: exists ? { exists } : { exists, headerSnippetToInsert },
+    entry: exists ? { exists } : {
+      exists,
+      headerSnippetToInsert: dedent`
+        <!-- ${date.toString()} -->
+        ## ${date.toLocaleString(locales, dateFormatOptions)}
+
+
+      `,
+    },
     line,
     character: 0,
   };
