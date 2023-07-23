@@ -70,11 +70,11 @@ the following numbering scheme:
 After deciding on a target version, run:
 
 - `git checkout main`
-- `yarn login`
-- `yarn publish-vsce [version]`
+- `yarn workspace extension login`
+- `yarn workspace extension publish-vsce [version]`
 
-The `yarn publish-vsce` command first updates the version number in
-[extension/package.json](./extension/package.json) to the given
+The `yarn […] publish-vsce` command first updates the version number
+in [extension/package.json](./extension/package.json) to the given
 version. Then it packages and publishes the extension to the VS Code
 Extension Marketplace.
 
@@ -102,7 +102,7 @@ Follow these steps to publish the extension to the Open VSX Registry:
    `extension/[…].vsix` file as the sole argument. Example in Bash:
 
    ```bash
-   yarn ovsx publish "extension/mdmonthly-$(jq -r .version extension/package.json).vsix"
+   yarn workspace extension ovsx publish "extension/mdmonthly-$(jq -r .version extension/share/dist/package.json).vsix"
    ```
 
 ### Committing, tagging and creating a GitHub prerelease and PR
