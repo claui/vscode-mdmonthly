@@ -45,7 +45,10 @@ rules:
   default-case-last: 1
   default-case: 2
   dot-location: [1, property]
-  dot-notation: [1, { allowKeywords: false }]
+
+  # For compatibility with typescript-eslint
+  dot-notation: 0
+
   eqeqeq: 1
   func-call-spacing: 1
   generator-star-spacing: [1, before]
