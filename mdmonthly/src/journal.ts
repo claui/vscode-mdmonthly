@@ -4,6 +4,7 @@ import path from "path";
 import dedent from "ts-dedent";
 import { Temporal } from "@js-temporal/polyfill";
 
+import { DateFormattingError } from "./errors";
 import { Fs } from "./fs-deps";
 import { Paths } from "./paths-deps";
 
@@ -80,6 +81,15 @@ interface JournalOptions {
   paths?: typeof Paths;
 }
 
+function snippetFor(isoDate: string, localizedDate: string): string {
+  return dedent`
+        <!-- ${isoDate} -->
+        ## ${localizedDate}
+
+
+      `;
+}
+
 export function createOrFindJournalEntry(
   isoDate: string,
   {
@@ -104,16 +114,26 @@ export function createOrFindJournalEntry(
 
   const { exists, line } = calculateInsertLine(lines, date);
 
+  let localizedDate: string;
+  try {
+    localizedDate = date.toLocaleString(locales, dateFormatOptions);
+  } catch (error) {
+    if ("message" in error
+      && typeof error.message === "string"
+      && (error.message as string)
+        .match("Incorrect locale information provided")
+    ) {
+      throw new DateFormattingError(error, locales, { cause: error });
+    }
+    /* c8 ignore next */
+    throw error;
+    /* c8 ignore next */
+  }
   return {
     markdownFilePath,
     entry: exists ? { exists } : {
       exists,
-      headerSnippetToInsert: dedent`
-        <!-- ${date.toString()} -->
-        ## ${date.toLocaleString(locales, dateFormatOptions)}
-
-
-      `,
+      headerSnippetToInsert: snippetFor(date.toString(), localizedDate),
     },
     line,
     character: 0,

@@ -4,7 +4,11 @@ import path from "path";
 import tmp from "tmp";
 import dedent from "ts-dedent";
 
-import { createOrFindJournalEntry, JournalResult } from "mdmonthly";
+import {
+  createOrFindJournalEntry,
+  DateFormattingError,
+  JournalResult
+} from "mdmonthly";
 import { Paths as _Paths } from "../src/paths-deps";
 
 function createTempDir(): string {
@@ -114,6 +118,42 @@ describe("createOrFindJournalEntry", () => {
     it("identifies the correct L2 header insertion point", () => {
       expect(result.line).toBe(2);
       expect(result.character).toBe(0);
+    });
+  });
+
+  describe("locale identifier", () => {
+    let tempDir: string;
+    let Paths: typeof _Paths;
+
+    beforeAll(() => {
+      tempDir = createTempDir();
+      Paths = {
+        dataPath: path.join(tempDir, "fake-xdg-data", "mdmonthly"),
+      };
+    });
+
+    afterAll(() => {
+      if (tempDir) {
+        deleteTempDir(tempDir);
+      }
+    });
+
+    describe("is invalid", () => {
+      it("throws a DateFormattingError", () => {
+        expect(() => createOrFindJournalEntry("2023-04-01", {
+          locales: ":",
+          paths: Paths,
+        })).toThrow(DateFormattingError);
+      });
+    });
+
+    describe("is empty", () => {
+      it("doesn’t throw anything", () => {
+        expect(() => createOrFindJournalEntry("2023-04-01", {
+          locales: "",
+          paths: Paths,
+        })).not.toThrow();
+      });
     });
   });
 
