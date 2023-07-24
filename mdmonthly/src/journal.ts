@@ -4,6 +4,7 @@ import path from "path";
 import dedent from "ts-dedent";
 import { Temporal } from "@js-temporal/polyfill";
 
+import { DateFormattingError, matchesErrorMessage } from "./errors";
 import { Fs } from "./fs-deps";
 import { Paths } from "./paths-deps";
 
@@ -80,6 +81,27 @@ interface JournalOptions {
   paths?: typeof Paths;
 }
 
+function getLocalizedDate(
+  date: Temporal.PlainDate,
+  {
+    locales = void 0,
+    dateFormatOptions = DEFAULT_DATE_FORMAT_OPTIONS,
+  }: JournalOptions,
+) {
+  try {
+    return date.toLocaleString(locales, dateFormatOptions);
+  } catch (error) {
+    if (matchesErrorMessage("Incorrect locale information provided", error)) {
+      throw new DateFormattingError(
+        `Invalid locale identifier: ${JSON.stringify(locales)}`, locales,
+        { cause: error });
+    }
+    /* c8 ignore next */
+    throw error;
+    /* c8 ignore next */
+  }
+}
+
 export function createOrFindJournalEntry(
   isoDate: string,
   {
@@ -109,11 +131,11 @@ export function createOrFindJournalEntry(
     entry: exists ? { exists } : {
       exists,
       headerSnippetToInsert: dedent`
-        <!-- ${date.toString()} -->
-        ## ${date.toLocaleString(locales, dateFormatOptions)}
+        <!-- ${isoDate} -->
+        ## ${getLocalizedDate(date, { locales, dateFormatOptions })}
 
 
-      `,
+        `,
     },
     line,
     character: 0,

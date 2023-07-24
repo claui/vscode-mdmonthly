@@ -13,7 +13,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": false,
     "strictNullChecks": true,
-    "target": "ES6"
+    "target": "ES2022"
   },
   "include": [
     "src"
