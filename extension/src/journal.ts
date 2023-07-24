@@ -49,16 +49,22 @@ async function queryIsoDate() {
   });
 }
 
+function getConfiguredLocale(): string | undefined {
+  const locale: string | undefined = workspace
+    .getConfiguration("mdmonthly")
+    .get("locale");
+  // Leaky abstraction: due to `createOrFindJournalEntry` using `Intl` under
+  // the hood, the empty string is not a valid locale identifier.
+  return locale === "" ? void 0 : locale;
+}
+
 export async function openJournalEntry() {
   const chosenDate: string | undefined = await queryIsoDate();
   if (!chosenDate) {
     return;
   }
-  const locale: string | undefined = workspace
-    .getConfiguration("mdmonthly")
-    .get("locale");
   const journalResult: JournalResult = createOrFindJournalEntry(chosenDate, {
-    locales: locale,
+    locales: getConfiguredLocale(),
   });
   log.info(`Result: ${JSON.stringify(journalResult)}`);
 

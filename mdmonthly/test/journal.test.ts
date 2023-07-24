@@ -150,7 +150,7 @@ describe("createOrFindJournalEntry", () => {
     describe("is empty", () => {
       it("doesn’t throw anything", () => {
         expect(() => createOrFindJournalEntry("2023-04-01", {
-          locales: "",
+          locales: void 0,
           paths: Paths,
         })).not.toThrow();
       });
