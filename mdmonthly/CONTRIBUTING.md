@@ -1,4 +1,4 @@
-# md-monthly
+# mdmonthly
 
 ## Requirements for contributing
 
