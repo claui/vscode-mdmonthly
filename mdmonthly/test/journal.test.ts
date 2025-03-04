@@ -159,7 +159,7 @@ describe("createOrFindJournalEntry", () => {
 
   describe.each([
     {
-      style: "long", fileContent: dedent`
+      style: "long-style entries, properly formatted", fileContent: dedent`
         # 2023-04
 
         <!-- 2023-04-03 -->
@@ -169,7 +169,7 @@ describe("createOrFindJournalEntry", () => {
       `
     },
     {
-      style: "short", fileContent: dedent`
+      style: "short-style entries, properly formatted", fileContent: dedent`
         # 2023-04
 
         <!-- 2023-04-03 -->
@@ -178,8 +178,48 @@ describe("createOrFindJournalEntry", () => {
         Test content
       `
     },
+    {
+      style: "long-style entries but no trailing newline", fileContent: dedent`
+        # 2023-04
+
+        <!-- 2023-04-03 -->
+        ## Montag, 03.04.2023
+
+        Test content but no newline at EOF`
+    },
+    {
+      style: "short-style entries but no trailing newline", fileContent: dedent`
+        # 2023-04
+
+        <!-- 2023-04-03 -->
+        ## 03.04.2023
+
+        Test content but no newline at EOF`
+    },
+    {
+      style: "long-style entries and an extra newline", fileContent: dedent`
+        # 2023-04
+
+        <!-- 2023-04-03 -->
+        ## Montag, 03.04.2023
+
+        Test content, followed by an extra newline at EOF
+
+      `
+    },
+    {
+      style: "short-style entries and an extra newline", fileContent: dedent`
+        # 2023-04
+
+        <!-- 2023-04-03 -->
+        ## 03.04.2023
+
+        Test content, followed by an extra newline at EOF
+
+      `
+    },
   ])(
-    "a Markdown file that contains $style-style entries",
+    "a Markdown file that contains $style",
     ({ fileContent }) => {
 
       let tempDir: string;
@@ -228,7 +268,7 @@ describe("createOrFindJournalEntry", () => {
           caseDescription: "is in the future",
           newDate: "2023-04-04",
           expectedResult: {
-            line: 5,
+            line: 7,
             character: 0,
             entry: {
               exists: false,
