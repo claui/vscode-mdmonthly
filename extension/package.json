@@ -23,7 +23,7 @@
     "del-cli": "^5.0.0",
     "esbuild": "^0.25.0",
     "esbuild-copy-static-files": "^0.1.0",
-    "eslint": "^8.45.0",
+    "eslint": "^9.26.0",
     "ovsx": "^0.8.2",
     "semver": "^7.5.4",
     "source-map-support": "^0.5.21",
